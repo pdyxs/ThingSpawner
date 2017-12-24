@@ -78,8 +78,10 @@ namespace PDYXS.ThingSpawner
         protected void Add(U ce)
         {
             var obj = Spawn();
-            obj.Initialise(ce);
-            entities.Add(obj);
+            if (obj != null) {
+                obj.Initialise(ce);
+                entities.Add(obj);
+            }
         }
 
         protected void Insert(int index, U ce)

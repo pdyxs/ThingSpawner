@@ -12,8 +12,25 @@ namespace PDYXS.ThingSpawner
 
         private bool hasPool = false;
 
+        protected bool CheckSpawn(T prefab, Transform parent) {
+            if (prefab == null)
+            {
+                Debug.LogError("Spawning " + typeof(T).ToString() + " failed: Missing prefab");
+                return false;
+            }
+            if (parent == null)
+            {
+                Debug.LogError("Spawning " + typeof(T).ToString() + " failed: Missing parent");
+                return false;
+            }
+            return true;
+        }
+
         protected virtual T Spawn()
         {
+            if (!CheckSpawn(prefab, parent)) {
+                return null;
+            }
             if (!hasPool)
             {
                 ObjectPool.CreatePool(prefab, 1);
