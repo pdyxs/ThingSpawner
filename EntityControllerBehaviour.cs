@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace PDYXS.ThingSpawner
 {
-    public abstract class EntityControllerBehaviour<T> : MonoBehaviour, IInitialisable<T>
+    public abstract class EntityControllerBehaviour<T> : MonoBehaviour, IInitialisable<T>, ISpawnTrackable
         where T : class
     {
 
@@ -13,9 +13,19 @@ namespace PDYXS.ThingSpawner
             get; private set;
         }
 
+        public bool HasSpawned
+        {
+            get
+            {
+                return hasSpawned;
+            }
+        }
+        private bool hasSpawned = false;
+
         public virtual void Initialise(T obj)
         {
             entity = obj;
+            hasSpawned = true;
         }
     }
 }

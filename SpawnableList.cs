@@ -6,7 +6,7 @@ namespace PDYXS.ThingSpawner
 {
     public class SpawnableList<T, U> : Spawnable<T>,
         IEnumerable
-        where T : MonoBehaviour, IInitialisable<U>
+        where T : MonoBehaviour, IInitialisable<U>, ISpawnTrackable
         where U : class
     {
         protected List<T> entities = new List<T>();
@@ -36,6 +36,7 @@ namespace PDYXS.ThingSpawner
 
         public void Initialise(EventList<U> bes)
         {
+            Initialise();
             Clear();
             if (bes == null)
             {

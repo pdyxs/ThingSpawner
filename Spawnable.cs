@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 namespace PDYXS.ThingSpawner
 {
-    public abstract class Spawnable<T> where T : MonoBehaviour
+    public abstract class Spawnable<T> where T : MonoBehaviour, ISpawnTrackable
     {
         public T prefab;
         public Transform parent;
@@ -26,6 +26,18 @@ namespace PDYXS.ThingSpawner
             return true;
         }
 
+        private List<T> preBuiltObjects = new List<T>();
+
+        protected void Initialise() {
+            foreach (T ch in parent.GetComponentsInChildren<T>(false))
+            {
+                if (!ch.HasSpawned)
+                {
+                    preBuiltObjects.Add(ch);
+                }
+            }
+        }
+
         protected virtual T Spawn()
         {
             if (!CheckSpawn(prefab, parent)) {
@@ -36,12 +48,17 @@ namespace PDYXS.ThingSpawner
                 ObjectPool.CreatePool(prefab, 1);
                 hasPool = true;
             }
+            if (preBuiltObjects.Count > 0) {
+                var obj = preBuiltObjects[0];
+                preBuiltObjects.RemoveAt(0);
+                return obj;
+            }
             return prefab.Spawn(parent);
         }
     }
 
     public class Spawnable<T, U> : Spawnable<T>
-        where T : MonoBehaviour, IInitialisable<U>
+        where T : MonoBehaviour, IInitialisable<U>, ISpawnTrackable
         where U : class
     {
         public T Get
@@ -55,15 +72,13 @@ namespace PDYXS.ThingSpawner
 
         public void Initialise(U ce)
         {
+            Initialise();
             Reset();
             if (ce == null)
             {
                 return;
             }
-            if (_entity == null)
-            {
-                _entity = Spawn();
-            }
+            _entity = Spawn();
             _entity.Initialise(ce);
         }
 

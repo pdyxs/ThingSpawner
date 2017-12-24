@@ -12,4 +12,11 @@ namespace PDYXS.ThingSpawner
 
         void Initialise(T obj);
     }
+
+    public interface ISpawnTrackable
+    {
+        bool HasSpawned {
+            get;
+        }
+    }
 }
