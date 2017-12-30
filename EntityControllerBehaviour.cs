@@ -4,10 +4,9 @@ using UnityEngine;
 
 namespace PDYXS.ThingSpawner
 {
-    public abstract class EntityControllerBehaviour<T> : MonoBehaviour, IInitialisable<T>, ISpawnTrackable
+    public abstract class EntityControllerBehaviour<T> : EntityControllerBehaviour, IInitialisable<T>, ISpawnTrackable
         where T : class
     {
-
         public T entity
         {
             get; private set;
@@ -27,5 +26,10 @@ namespace PDYXS.ThingSpawner
             entity = obj;
             hasSpawned = true;
         }
+
+        [SerializeField]
+        private EntityControllerPrefabSaver prefabSaver;
     }
+
+    public abstract class EntityControllerBehaviour : MonoBehaviour {}
 }

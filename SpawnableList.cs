@@ -64,7 +64,7 @@ namespace PDYXS.ThingSpawner
             Clear();
         }
 
-        protected void Clear()
+        protected virtual void Clear()
         {
             foreach (var e in entities)
             {
@@ -76,7 +76,7 @@ namespace PDYXS.ThingSpawner
             entities.Clear();
         }
 
-        protected void Add(U ce)
+        protected virtual void Add(U ce)
         {
             var obj = Spawn();
             if (obj != null) {
@@ -85,20 +85,20 @@ namespace PDYXS.ThingSpawner
             }
         }
 
-        protected void Insert(int index, U ce)
+        protected virtual void Insert(int index, U ce)
         {
             var obj = Spawn();
             obj.Initialise(ce);
             entities.Insert(index, obj);
         }
 
-        protected void Remove(T obj)
+        protected virtual void Remove(T obj)
         {
             entities.Remove(obj);
             obj.Recycle();
         }
 
-        protected void Remove(U ce)
+        protected virtual void Remove(U ce)
         {
             var o = entities.Find((obj) => obj.entity == ce);
             if (o != null)
@@ -107,7 +107,7 @@ namespace PDYXS.ThingSpawner
             }
         }
 
-        protected void RemoveAt(int index)
+        protected virtual void RemoveAt(int index)
         {
             var obj = entities[index];
             entities.RemoveAt(index);
