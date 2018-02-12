@@ -69,6 +69,7 @@ namespace PDYXS.ThingSpawner
                 spawnableFor(parent.GetComponentsInChildren<T>().Length)
             ) as MonoBehaviour;
             ret.transform.SetParent(parent);
+            ret.transform.localScale = Vector3.one;
             return ret;
         }
 #endif

@@ -27,6 +27,7 @@ namespace PDYXS.ThingSpawner
                 basePrefab
             ) as MonoBehaviour;
             ret.transform.SetParent(parent);
+            ret.transform.localScale = Vector3.one;
             return ret;
         }
 #endif
