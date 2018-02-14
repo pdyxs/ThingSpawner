@@ -81,17 +81,27 @@ namespace PDYXS.ThingSpawner
             return true;
         }
 
-        protected virtual T Spawn()
+        protected void CheckPool() 
         {
-            if (!CheckSpawn(prefab, parent))
-            {
-                return null;
-            }
             if (!hasPool)
             {
                 ObjectPool.CreatePool(prefab, 1);
                 hasPool = true;
             }
+        }
+
+        protected virtual T Spawn()
+        {
+#if UNITY_EDITOR
+            if (!Application.isPlaying) {
+                return EditorSpawn().GetComponent<T>();
+            }
+#endif
+            if (!CheckSpawn(prefab, parent))
+            {
+                return null;
+            }
+            CheckPool();
             if (preBuiltObjects.Count > 0)
             {
                 var obj = preBuiltObjects[0];

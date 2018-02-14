@@ -6,8 +6,8 @@ using PDYXS.Skins;
 
 namespace PDYXS.ThingSpawner
 {
-    [CustomPropertyDrawer(typeof(EntityControllerPrefabSaver))]
-    public class EntityControllerPrefabSaverDrawer : PropertyDrawer
+    [CustomPropertyDrawer(typeof(PrefabSaver))]
+    public class PrefabSaverDrawer : PropertyDrawer
     {
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
@@ -21,11 +21,11 @@ namespace PDYXS.ThingSpawner
             {
                 var mono = property.serializedObject.targetObject as MonoBehaviour;
                 Dictionary<GameObject, Transform> parentStore = new Dictionary<GameObject, Transform>();
-                foreach (var c in mono.GetComponentsInChildren<EntityControllerBehaviour>()) {
-                    parentStore[c.gameObject] = c.transform.parent;
-                }
-                foreach (var c in mono.GetComponentsInChildren<SkinnedObject>()) {
-                    parentStore[c.gameObject] = c.transform.parent;
+                foreach (var c in mono.GetComponentsInChildren<MonoBehaviour>()) {
+                    if (c is IPrefabSaveable)
+                    {
+                        parentStore[c.gameObject] = c.transform.parent;
+                    }
                 }
 
                 foreach (var stuff in parentStore) {

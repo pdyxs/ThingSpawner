@@ -5,7 +5,9 @@ using UnityEngine;
 namespace PDYXS.ThingSpawner
 {
     [System.Serializable]
-    public class EntityControllerPrefabSaver
+    public class PrefabSaver
     {
     }
+
+    public interface IPrefabSaveable {}
 }

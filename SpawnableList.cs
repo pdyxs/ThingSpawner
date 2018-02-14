@@ -4,16 +4,16 @@ using UnityEngine;
 
 namespace PDYXS.ThingSpawner
 {
-    public class SpawnableList<T, U> : Spawnable<T>,
+    public class SpawnableList<TComponent, TModelClass> : Spawnable<TComponent>,
         IEnumerable
-        where T : MonoBehaviour, IInitialisable<U>, ISpawnTrackable
-        where U : class
+        where TComponent : MonoBehaviour, IInitialisable<TModelClass>, ISpawnTrackable
+        where TModelClass : class
     {
-        protected List<T> entities = new List<T>();
+        protected List<TComponent> entities = new List<TComponent>();
 
-        private EventList<U> baseEntities;
+        private EventList<TModelClass> baseEntities;
 
-        public T this[int i]
+        public TComponent this[int i]
         {
             get
             {
@@ -34,7 +34,7 @@ namespace PDYXS.ThingSpawner
             return entities.GetEnumerator();
         }
 
-        public void Initialise(EventList<U> bes)
+        public void Initialise(EventList<TModelClass> bes)
         {
             Initialise();
             Clear();
@@ -52,6 +52,12 @@ namespace PDYXS.ThingSpawner
             bes.OnCleared.AddListener(Clear);
             bes.OnInserted.AddListener(Insert);
             bes.OnRemovedAt.AddListener(RemoveAt);
+
+            CheckPool();
+            foreach (var obj in preBuiltObjects) {
+                obj.Recycle();
+            }
+            preBuiltObjects.Clear();
         }
 
         public void Recycle()
@@ -76,7 +82,7 @@ namespace PDYXS.ThingSpawner
             entities.Clear();
         }
 
-        protected virtual void Add(U ce)
+        protected virtual void Add(TModelClass ce)
         {
             var obj = Spawn();
             if (obj != null) {
@@ -85,20 +91,20 @@ namespace PDYXS.ThingSpawner
             }
         }
 
-        protected virtual void Insert(int index, U ce)
+        protected virtual void Insert(int index, TModelClass ce)
         {
             var obj = Spawn();
             obj.Initialise(ce);
             entities.Insert(index, obj);
         }
 
-        protected virtual void Remove(T obj)
+        protected virtual void Remove(TComponent obj)
         {
             entities.Remove(obj);
             obj.Recycle();
         }
 
-        protected virtual void Remove(U ce)
+        protected virtual void Remove(TModelClass ce)
         {
             var o = entities.Find((obj) => obj.entity == ce);
             if (o != null)
