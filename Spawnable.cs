@@ -83,6 +83,11 @@ namespace PDYXS.ThingSpawner
 
         protected void CheckPool() 
         {
+#if UNITY_EDITOR
+            if (!Application.isPlaying) {
+                return;
+            }
+#endif
             if (!hasPool)
             {
                 ObjectPool.CreatePool(prefab, 1);
