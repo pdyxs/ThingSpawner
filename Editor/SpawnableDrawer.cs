@@ -40,7 +40,7 @@ namespace PDYXS.ThingSpawner
             EditorUtility.SetDirty(property.GetParent() as Object);
             pos = EditorDrawer.FromHeight(pos, EditorGUIUtility.singleLineHeight);
 
-            if (spawnable.basePrefab == null || spawnable.parent == null) {
+            if (spawnable.basePrefab == null || spawnable.parent == null || Application.isPlaying) {
                 GUI.enabled = false;
             }
             if (GUI.Button(rect, "Build")) {
