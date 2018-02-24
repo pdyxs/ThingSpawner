@@ -43,7 +43,7 @@ namespace PDYXS.ThingSpawner
                 }
 
                 foreach (var stuff in parentStore) {
-                    stuff.Key.transform.SetParent(stuff.Value);
+                    stuff.Key.transform.SetParent(stuff.Value, false);
                     stuff.Key.transform.localScale = Vector3.one;
                     EditorUtility.SetDirty(stuff.Key);
                 }

@@ -11,7 +11,9 @@ namespace PDYXS.ThingSpawner
     {
         protected List<TComponent> entities = new List<TComponent>();
 
-        private EventList<TModelClass> baseEntities;
+        public EventList<TModelClass> baseEntities {
+            get; private set;
+        }
 
         public TComponent this[int i]
         {
