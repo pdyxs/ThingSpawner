@@ -34,12 +34,15 @@ namespace PDYXS.ThingSpawner
                 }
 
                 foreach (var stuff in parentStore) {
+                    var hf = stuff.Key.gameObject.hideFlags;
+                    stuff.Key.gameObject.hideFlags = HideFlags.None;
                     if (PrefabUtility.GetPrefabType(stuff.Key) == PrefabType.DisconnectedPrefabInstance)
                     {
                         PrefabUtility.ReconnectToLastPrefab(stuff.Key);
                     }
                     PrefabUtility.ReplacePrefab(stuff.Key, PrefabUtility.GetPrefabParent(stuff.Key));
                     PrefabUtility.RevertPrefabInstance(stuff.Key);
+                    stuff.Key.gameObject.hideFlags = hf;
                 }
 
                 foreach (var stuff in parentStore) {

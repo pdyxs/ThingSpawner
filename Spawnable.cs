@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace PDYXS.ThingSpawner
 {
@@ -114,7 +114,23 @@ namespace PDYXS.ThingSpawner
                 preBuiltObjects.RemoveAt(0);
                 return obj;
             }
-            return prefab.Spawn(parent);
+
+            var ret = prefab.Spawn(parent);
+            var layout = parent.GetComponent<HorizontalOrVerticalLayoutGroup>();
+            if (layout != null) {
+                layout.StartCoroutine(FixLayout(layout));
+            }
+            return ret;
+        }
+
+        //#overkill
+        private IEnumerator FixLayout(HorizontalOrVerticalLayoutGroup layout) {
+            yield return new WaitForEndOfFrame();
+            Canvas.ForceUpdateCanvases();
+            layout.CalculateLayoutInputVertical();
+            layout.CalculateLayoutInputHorizontal();
+            layout.SetLayoutVertical();
+            layout.SetLayoutHorizontal();
         }
     }
 
