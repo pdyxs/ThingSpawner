@@ -26,6 +26,7 @@ namespace PDYXS.ThingSpawner
             var ret = UnityEditor.PrefabUtility.InstantiatePrefab(
                 basePrefab
             ) as MonoBehaviour;
+            ret.gameObject.hideFlags = HideFlags.DontSave;
             ret.transform.SetParent(parent);
             ret.transform.localScale = Vector3.one;
             return ret;
