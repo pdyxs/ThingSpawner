@@ -1,0 +1,11 @@
+{
+    "name": "ThingSpawnerEditor",
+    "references": [
+        "ThingSpawner",
+        "EditorDrawer"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": []
+}

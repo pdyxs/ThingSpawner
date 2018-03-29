@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace PDYXS.ThingSpawner
 {
     [System.Serializable]
-    public class Spawnable
+    public abstract class Spawnable
     {
         public MonoBehaviour basePrefab;
 

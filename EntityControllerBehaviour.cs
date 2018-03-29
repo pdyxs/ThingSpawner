@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace PDYXS.ThingSpawner
 {
     public abstract class EntityControllerBehaviour<T> : 
         EntityControllerBehaviour, 
         IInitialisable<T>, 
-        ISpawnTrackable,
         IPrefabSaveable
         where T : class
     {
@@ -16,24 +16,28 @@ namespace PDYXS.ThingSpawner
             get; private set;
         }
 
-        public bool HasSpawned
-        {
-            get
-            {
-                return hasSpawned;
-            }
-        }
-        private bool hasSpawned = false;
-
-        public virtual void Initialise(T obj)
+        public void Initialise(T obj)
         {
             entity = obj;
-            hasSpawned = true;
+            doInitialise();
+            HasSpawned = true;
+            OnInitialised.Invoke();
         }
+
+        protected virtual void doInitialise() {}
 
         [SerializeField]
         private PrefabSaver prefabSaver;
     }
 
-    public abstract class EntityControllerBehaviour : MonoBehaviour {}
+    public abstract class EntityControllerBehaviour : 
+        MonoBehaviour,
+        ISpawnTrackable
+    {
+        public UnityEvent OnInitialised = new UnityEvent();
+        
+        public bool HasSpawned { get; internal set; } = false;
+    }
+    
+    
 }

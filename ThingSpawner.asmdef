@@ -1,0 +1,10 @@
+{
+    "name": "ThingSpawner",
+    "references": [
+        "PlaymakerUtilities",
+        "UnityUitilities",
+        "EventWrappers"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": []
+}

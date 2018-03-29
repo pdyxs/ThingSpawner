@@ -3,7 +3,11 @@ using System.Collections.Generic;
 
 namespace PDYXS.ThingSpawner
 {
-    public interface IInitialisable<T>
+    public interface IInitialisable
+    {
+    }
+    
+    public interface IInitialisable<T> : IInitialisable
     {
         T entity
         {
