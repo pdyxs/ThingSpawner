@@ -9,12 +9,17 @@ namespace PDYXS.ThingSpawner
     
     public interface IInitialisable<T> : IInitialisable
     {
+        void Initialise(T obj);
+    }
+    
+    public interface IEntityInitialisable<T> : IInitialisable<T>
+    {
         T entity
         {
             get;
         }
 
-        void Initialise(T obj);
+        void Despawn();
     }
 
     public interface ISpawnTrackable

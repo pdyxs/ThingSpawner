@@ -5,7 +5,7 @@ using UnityEngine;
 namespace PDYXS.ThingSpawner
 {
     public class VariedSpawnableList<T, U> : SpawnableList<T, U>
-        where T : MonoBehaviour, IInitialisable<U>, ISpawnTrackable
+        where T : MonoBehaviour, IEntityInitialisable<U>, ISpawnTrackable
         where U : class
     {
         public List<T> prefabs = new List<T>();

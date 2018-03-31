@@ -136,7 +136,7 @@ namespace PDYXS.ThingSpawner
     }
 
     public class Spawnable<T, U> : Spawnable<T>
-        where T : MonoBehaviour, IInitialisable<U>, ISpawnTrackable
+        where T : MonoBehaviour, IEntityInitialisable<U>, ISpawnTrackable
         where U : class
     {
         public T Get
@@ -182,7 +182,7 @@ namespace PDYXS.ThingSpawner
         {
             if (_entity != null && _entity.isActiveAndEnabled)
             {
-                _entity.Recycle();
+                _entity.Despawn();
             }
             _entity = null;
         }

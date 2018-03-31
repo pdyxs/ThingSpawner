@@ -6,7 +6,7 @@ namespace PDYXS.ThingSpawner
 {
     public class SpawnableList<TComponent, TModelClass> : Spawnable<TComponent>,
         IEnumerable
-        where TComponent : MonoBehaviour, IInitialisable<TModelClass>, ISpawnTrackable
+        where TComponent : MonoBehaviour, IEntityInitialisable<TModelClass>, ISpawnTrackable
         where TModelClass : class
     {
         protected List<TComponent> entities = new List<TComponent>();

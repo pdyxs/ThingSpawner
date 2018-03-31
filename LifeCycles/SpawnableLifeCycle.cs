@@ -4,12 +4,19 @@ using UnityEngine;
 using PDYXS.ThingSpawner;
 using UnityEngine.Events;
 
+public interface ILifecycle
+{
+	void Initialise();
+	void Teardown();
+}
+
 [RequireComponent(typeof(EntityControllerBehaviour))]
 public class SpawnableLifeCycle : 
 	FSMWrapper<SpawnableLifeCycle.Events, SpawnableLifeCycle.States>,
 	IFSMGlobalEventSpecifier<SpawnableLifeCycle.Events>,
 	IFSMEventRouteSpecifier<SpawnableLifeCycle.Events, SpawnableLifeCycle.States>,
-	IFSMStateHandler<SpawnableLifeCycle.States>
+	IFSMStateHandler<SpawnableLifeCycle.States>,
+	ILifecycle
 {
 	public enum Events
 	{
@@ -23,21 +30,6 @@ public class SpawnableLifeCycle :
 		Teardown,
 		Recycle
 	}
-
-	public EntityControllerBehaviour entityController
-	{
-		get
-		{
-			if (_entityController == null)
-			{
-				_entityController = GetComponent<EntityControllerBehaviour>();
-			}
-
-			return _entityController;
-		}
-	}
-
-	private EntityControllerBehaviour _entityController;
 
 	public Events[] GlobalEvents()
 	{
@@ -60,31 +52,18 @@ public class SpawnableLifeCycle :
 		switch (state)
 		{
 			case States.Ready:
-				OnReady.Invoke();
+				OnReady.Raise(this);
 				break;
 			case States.Recycle:
 				this.Recycle();
 				break;
 		}
 	}
-	
-	public UnityEvent OnReady = new UnityEvent();
 
-	private void OnEnable()
-	{
-		if (entityController.HasSpawned)
-		{
-			SendEvent(Events.Initialise);
-		}
-		else
-		{
-			entityController.OnInitialised.AddListener(OnControllerInitialised);
-		}
-	}
+	public GameEvent OnReady;
 
-	private void OnControllerInitialised()
+	public void Initialise()
 	{
-		entityController.OnInitialised.RemoveListener(OnControllerInitialised);
 		SendEvent(Events.Initialise);
 	}
 

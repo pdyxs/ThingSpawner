@@ -6,7 +6,7 @@ using UnityEditor;
 namespace PDYXS.ThingSpawner
 {
     public class VariedSpawnableListDrawer<T,U> : PropertyDrawer
-        where T : MonoBehaviour, IInitialisable<U>, ISpawnTrackable
+        where T : MonoBehaviour, IEntityInitialisable<U>, ISpawnTrackable
         where U : class
     {
 
