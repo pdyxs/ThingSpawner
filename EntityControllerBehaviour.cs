@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+public interface IEntityProvider<out T>
+{
+    T entity { get; }
+}
+
 namespace PDYXS.ThingSpawner
 {
     public abstract class EntityControllerBehaviour<T> : 
         EntityControllerBehaviour, 
         IEntityInitialisable<T>, 
+        IEntityProvider<T>,
         IPrefabSaveable
         where T : class
     {
