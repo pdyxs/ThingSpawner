@@ -49,6 +49,21 @@ namespace PDYXS.ThingSpawner
                 return typeof(T);
             }
         }
+        
+        public T Get => _entity;
+        internal T _entity;
+
+        public bool Exists => _entity != null;
+
+        public void ForceSpawn()
+        {
+            _entity = Spawn();
+        }
+
+        public void Set(T val)
+        {
+            _entity = val;
+        }
 
         protected bool hasPool = false;
 
@@ -139,15 +154,6 @@ namespace PDYXS.ThingSpawner
         where T : MonoBehaviour, IEntityInitialisable<U>, ISpawnTrackable
         where U : class
     {
-        public T Get
-        {
-            get
-            {
-                return _entity;
-            }
-        }
-        private T _entity;
-
         private EventObject<U> eventObject = null;
 
         public void Initialise(U ce)
