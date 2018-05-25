@@ -55,11 +55,6 @@ namespace PDYXS.ThingSpawner
 
         public bool Exists => _entity != null;
 
-        public void ForceSpawn()
-        {
-            _entity = Spawn();
-        }
-
         public void Set(T val)
         {
             _entity = val;
