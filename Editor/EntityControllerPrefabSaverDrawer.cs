@@ -45,8 +45,9 @@ namespace PDYXS.ThingSpawner
                     go1.hideFlags = HideFlags.DontSave;
                 }
 
-                foreach (var go2 in toSave)
-                {
+//                foreach (var go2 in toSave)
+//                {
+                var go2 = mono.gameObject;
                     go2.hideFlags = HideFlags.None;
                     if (PrefabUtility.GetPrefabType(go2) == PrefabType.DisconnectedPrefabInstance)
                     {
@@ -54,7 +55,7 @@ namespace PDYXS.ThingSpawner
                     }
                     PrefabUtility.ReplacePrefab(go2, PrefabUtility.GetPrefabParent(go2), ReplacePrefabOptions.ConnectToPrefab);
                     go2.hideFlags = HideFlags.DontSave;
-                }
+//                }
 
                 foreach (var go3 in toSave)
                 {
