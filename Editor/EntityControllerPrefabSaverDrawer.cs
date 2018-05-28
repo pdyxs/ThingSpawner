@@ -6,7 +6,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEditor;
 using Component = UnityEngine.Component;
-using EditorCoroutines;
 
 namespace PDYXS.ThingSpawner
 {
